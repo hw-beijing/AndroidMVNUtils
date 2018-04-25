@@ -12,5 +12,8 @@ androdi studio 项目的maven管理,自动拉取git代码,自动提交相应mave
 1. app的git目录
 2. app的版本号
 3. app的本地路径
+   以\结束
 4. 环境 
    环境可以不传,此环境只针对妙健康的项目的 开发,测试,生产 环境
+   
+命令:  python \AndroidMVNUtils\src\Main.py 地址 app版本号 本地路径 环境
