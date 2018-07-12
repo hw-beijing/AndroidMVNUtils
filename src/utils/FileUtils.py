@@ -1,4 +1,5 @@
 import os
+import pickle
 from utils.StringUtils import StringUtils
 
 
@@ -47,7 +48,7 @@ class FileUtils:
                 if line != "" and not line.startswith(t) and line.startswith("compile"):
                     for str in modules:
                         strName = str.split(":")
-                        if strName.__sizeof__() >= 2 and strName[-1] in line:
+                        if strName.__sizeof__() >= 2 and (strName[-1] + "_mvn") in line:
                             st = line.split("\"")
                             print("readMainGradle : " + str + " " + st[1])
                             modulesMap[str] = st[1]
@@ -67,7 +68,8 @@ class FileUtils:
     @staticmethod
     def judgeModuleExist(modulePath):
         if StringUtils.formatString(modulePath) != "":
-            str = modulePath + ".git" + os.sep + "HEAD"
+            str = modulePath + ".git"
+            print("judgeModuleExist: " + str)
             return FileUtils.judgeFileExist(str)
         return False
 
@@ -78,9 +80,39 @@ class FileUtils:
             if arrayOLines.__sizeof__() > 1:
                 str = arrayOLines[0]
                 if os.sep in str:
+                    print(str)
                     versions = str.split(os.sep)
+                    print(versions)
                     print("getModuleGitVersion : " + versions[-1])
-                    return versions[-1]
+                    return StringUtils.formatString(versions[-1])
+                elif "/" in str:
+                    print(str)
+                    versions = str.split("/")
+                    print(versions)
+                    print("getModuleGitVersion : " + versions[-1])
+                    return StringUtils.formatString(versions[-1])
                 else:
-                    return str
+                    return StringUtils.formatString(str)
         return ""
+
+    def saveConfigDict(path, dict):
+        print("saveConfigDict:" + path)
+        print("saveConfigDict:" + str(dict))
+        f = open(path + os.sep + "andrpidMvnConfig", "wb+")
+        # 写入
+        pickle.dump(dict, f)  # 序列化到文件
+
+        # 关闭
+        f.close()
+
+    def readConfigDict(path):
+        filePath = path + os.sep + "andrpidMvnConfig"
+        print("readConfigDict:" + filePath)
+        if not FileUtils.judgeFileExist(filePath):
+            return {}
+        f = open(filePath, "rb+")
+        # 写入
+        dict = pickle.load(f)  # 序列化到文件
+        # 关闭
+        f.close()
+        return dict

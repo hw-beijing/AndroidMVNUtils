@@ -1,0 +1,6 @@
+﻿
+命令     脚本   git地址  版本号  本地位置 是否强制maven     功能
+python 脚本位置 git地址  版本号  本地地址   0               version
+
+是否强制maven 0 不强制  1强制
+功能  不传 默认 开发环境maven  verison 输出子模块版本号  git 拉取子模块代码    其他 上传相应maven

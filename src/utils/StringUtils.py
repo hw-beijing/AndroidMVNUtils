@@ -3,6 +3,7 @@ class StringUtils:
     @staticmethod
     def formatString(str):
         str =str.strip()
+        str = str.replace(" ", "")
         str = str.replace("\n", "")
         return str
 
